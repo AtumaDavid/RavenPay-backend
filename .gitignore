@@ -1,0 +1,28 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Build artifacts
+dist/
+build/
+
+# Editor and OS files
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Database files (if applicable)
+*.sql
+*.sqlite
+
+# Test coverage reports
+coverage/
