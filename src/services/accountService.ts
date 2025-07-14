@@ -1,5 +1,5 @@
 import db from '../models/db';
-import { Account } from '../types';
+import { Account, Transaction } from '../types';
 
 export const generateAccount = async (userId: number): Promise<Account> => {
   try {
@@ -34,5 +34,30 @@ export const generateAccount = async (userId: number): Promise<Account> => {
     return account;
   } catch (error: any) {
     throw new Error(`Failed to generate account: ${error.message}`);
+  }
+};
+
+export const getAccountDetails = async (userId: number): Promise<Account> => {
+  try {
+    const account = await db('accounts').where({ user_id: userId }).first();
+    if (!account) throw new Error('Account not found');
+    return account;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch account: ${error.message}`);
+  }
+};
+
+export const getTransactionHistory = async (
+  userId: number
+): Promise<Transaction[]> => {
+  try {
+    const account = await db('accounts').where({ user_id: userId }).first();
+    if (!account) throw new Error('Account not found');
+    const transactions = await db('transactions')
+      .where({ user_id: userId })
+      .orWhere({ account_id: account.id });
+    return transactions;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch transaction history: ${error.message}`);
   }
 };
