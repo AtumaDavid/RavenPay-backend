@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { login, signup } from '../services/authService';
+import { generateAccount } from '../services/accountService';
 
 export const registerUser = async (
   req: Request,
@@ -8,7 +9,16 @@ export const registerUser = async (
   try {
     const { email, password, firstName, lastName } = req.body;
     const user = await signup(email, password, firstName, lastName);
-    res.status(201).json({ message: 'user registered', user });
+    const account = await generateAccount(user.id);
+    res.status(201).json({
+      message: 'User registered and account generated',
+      user: { id: user.id, email: user.email },
+      account: {
+        id: account.id,
+        account_number: account.account_number,
+        bank_name: account.bank_name,
+      },
+    });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
   }

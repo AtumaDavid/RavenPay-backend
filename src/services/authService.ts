@@ -13,16 +13,15 @@ export const signup = async (
   lastName: string
 ): Promise<User> => {
   const hashedPassword = await bcrypt.hash(password, saltRounds);
-  const [user] = await db('users')
-    .insert({
-      email,
-      password: hashedPassword,
-      first_name: firstName,
-      last_name: lastName,
-      created_at: new Date(),
-      updated_at: new Date(),
-    })
-    .returning('*'); // Return the inserted user
+  await db('users').insert({
+    email,
+    password: hashedPassword,
+    first_name: firstName,
+    last_name: lastName,
+    created_at: new Date(),
+    updated_at: new Date(),
+  });
+  const user = await db('users').where({ email }).first();
   return user;
 };
 

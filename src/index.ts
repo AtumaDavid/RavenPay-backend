@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
+import webhookRoutes from './routes/webhookRoute';
 
 //load environment variables from .env file
 dotenv.config();
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/auth', authRoutes);
+app.use('/', webhookRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({ message: 'Money Transfer App API is running!' });
