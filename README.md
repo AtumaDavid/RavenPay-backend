@@ -26,3 +26,7 @@ npx knex migrate:make create_webhook_logs_table --knexfile config/knexfile.ts
 **transactions**: id, user_id (FK), account_id (FK), type (deposit/transfer), amount, recipient_account, recipient_bank, status (pending/completed/failed), reference (unique), created_at, updated_at
 
 **webhook_logs**: id, payload (JSON), transaction_id (FK), created_at
+
+## Postman Documentation
+
+- https://documenter.getpostman.com/view/29208473/2sB34hGg7c
